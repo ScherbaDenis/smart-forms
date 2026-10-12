@@ -131,6 +131,7 @@ This project should follow Microsoft Clean Architecture principles:
 - Keep PRs scoped to one goal.
 - Ensure tests pass before finishing work.
 - Prefer maintainable, explicit code over clever optimization.
+- No comments without PR. All visible discussion, code review notes, or implementation explanations must be tied to a pull request and review process.
 
 ## Default approach for this project
 - Start with a clean, modular backend and Angular frontend.
