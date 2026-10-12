@@ -1,57 +1,74 @@
 # Smart Forms
 
-## 1. Project name
-Smart Forms
+## 1. Goal of the project
 
-## 2. Purpose
-Smart Forms is a modern web application for creating, managing, and analyzing digital forms. The platform helps users build custom forms quickly without writing code and collect structured data from clients, employees, partners, and customers.
+Smart Forms is a SaaS-style application for creating and managing web forms. Users can define custom fields, share forms, collect responses, and review results in one place.
 
-## 3. Problem to solve
-Many organizations still rely on spreadsheets, static HTML forms, or disconnected tools to collect information. This creates several issues:
+The product should support:
+- user authentication
+- dashboard for forms
+- form creation and editing
+- form publishing
+- submission collection
+- result viewing
+- CSV export
+- basic analytics
 
-- Slow form creation and updates
-- Poor customization flexibility
-- Weak or missing analytics
-- Difficult sharing and submission tracking
-- Limited mobile-friendly experience
-- Lack of a single place to manage forms and results
+## 2. Technology stack
 
-Smart Forms aims to solve these problems with a single, modern, easy-to-use platform.
+### Frontend
+- Angular
+- TypeScript
+- RxJS
+- Angular Router
+- Angular Material or a custom design system
 
-## 4. Target users
-The product is designed for:
+### Backend
+- .NET 9
+- ASP.NET Core Minimal API
+- Entity Framework Core
+- FluentValidation
+- Serilog
+- Swagger / OpenAPI
 
-- Small and medium businesses
-- HR and recruiting teams
-- Sales and customer support teams
-- Education and event organizers
-- Internal teams that need structured data collection
-- Anyone who needs a simple form builder without coding
+### Database
+- SQL Server locally
+- Azure SQL Database in production
+- EF Core migrations
 
-## 5. Main goals
-The main goals of Smart Forms are to:
+### Infrastructure
+- Docker + Docker Compose
+- Azure App Service or Azure Container Apps
+- Azure Key Vault
+- Application Insights
+- GitHub Actions for CI/CD
 
-- Allow users to create forms quickly and intuitively
-- Support a variety of field types and validations
-- Simplify sharing and publishing forms
-- Centralize submissions in one dashboard
-- Make form results easy to review and export
-- Build a foundation for future automation and analytics features
+### Security
+- JWT or Microsoft Entra ID / Azure AD
+- HTTPS only
+- secret management via Key Vault
+- validation and sanitization of user input
 
-## 6. Core product concept
-Smart Forms is a web app where users can:
+## 3. Architecture
 
-- Create a new form
-- Add fields such as text, email, number, select, checkbox, date, and file upload
-- Configure validation rules and required fields
-- Preview the form before publishing
-- Share a public link or internal form access
-- Collect responses from users
-- Review submissions in one dashboard
-- Export results to CSV or other formats
+We use a modular architecture with a separate frontend and backend.
 
-This is the core product idea that will be developed in future phases.
+### Frontend
+The Angular application will include pages for:
+- login
+- dashboard
+- form builder
+- form preview
+- submissions list
+- settings
 
----
+### Backend
+The ASP.NET Core Minimal API will expose REST endpoints and own the business logic and persistence layer.
 
-This document is the initial project definition for Smart Forms. It will be expanded with technical requirements, architecture, database schema, and implementation plan in the next steps.
+### Design principles
+- frontend communicates only with the API
+- backend owns validation, business rules, and database access
+- database access is handled only through the backend
+- the system is structured for future scaling and Azure deployment
+
+This is the technical foundation for the Smart Forms project.
