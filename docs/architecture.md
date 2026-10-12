@@ -208,7 +208,44 @@ Use a pragmatic architecture:
 
 This preserves the microservices learning but avoids starting with too much operational overhead.
 
-## 11. Final conclusion
+## 11. CQRS and MediatR direction
+
+For Smart Forms we plan to use CQRS as the application pattern. The backend will separate commands and queries so that write operations and read operations are handled independently.
+
+This is useful because the project has two very different workloads:
+- write-heavy flows: create/update forms, publish forms, submit answers
+- read-heavy flows: dashboard, list forms, review submissions, analytics, export
+
+### Why MediatR
+
+MediatR is useful for internal in-process messaging between modules inside the same service.
+
+It gives us:
+- cleaner handler-based architecture
+- easier testability
+- clear separation between commands, queries, and notifications
+- faster future refactoring as the codebase grows
+
+Important: MediatR is not a replacement for an API Gateway. It does not route external HTTP traffic. It solves internal application composition and orchestration.
+
+### MediatR vs broker-based messaging
+
+MediatR is designed for in-memory communication inside one process. It is ideal for the initial version of Smart Forms.
+
+Later, if the system grows and we need asynchronous communication between services, we can introduce a broker such as:
+- RabbitMQ
+- Azure Service Bus
+
+A good migration path is:
+1. use MediatR for commands and domain events inside the app
+2. define domain events and integration events
+3. add an event abstraction such as `IEventPublisher`
+4. implement it with RabbitMQ or Azure Service Bus later
+5. use the Outbox pattern for reliability if needed
+
+This means the architecture remains flexible: we can start with a simple internal CQRS model and transition to broker-based messaging when real product complexity requires it.
+
+## 12. Final conclusion
 
 The old PetMicroservices project is a strong reference for learning microservice design:
 - API Gateway as a front door
@@ -222,3 +259,4 @@ For Smart Forms, the right approach is not to copy the old project exactly, but 
 The main takeaway is:
 - microservices are good for business decomposition
 - but for a new product, start lean and grow only when complexity requires it
+- CQRS + MediatR is a good fit for the Smart Forms backend and provides a safe path toward broker-based messaging in the future
